@@ -1,12 +1,13 @@
 package conspect.Chapter9
 
-//вынужден этот конспект писать в объекте, потому что в worksheet что-то слишком многое падает.
+import java.io.{File, FileInputStream, PrintWriter}
 
+//вынужден этот конспект писать в объекте, потому что в worksheet что-то слишком многое падает.
 object conspect extends App {
   import scala.io.Source
   import scala.io.StdIn.{readDouble, readInt}                    //библиотека для чтения из файлов
   //имя файла и кодировка. кодировку можно опустить, если она совпадает с кодировкой по-умолчанию в системе
-  val sourceDir = "C:\\WorkData\\Scala_Projects\\ScalaForImpatientConspect\\src\\main\\scala\\conspect\\Chapter9\\"
+  val sourceDir = "\\src\\main\\scala\\conspect\\Chapter9\\"
   val source = Source.fromFile(sourceDir+"input.txt","UTF-8")
   //не находит файл по косвенной ссылке, потому так.
   val lineIterator = source.getLines()      //возвращает итератор (что это такое, нам пока неизвестно, но запомни)
@@ -22,6 +23,7 @@ object conspect extends App {
     buf.head    //тот самый следующий символ
     buf.next    //он же, но со сдвигом маркера чтения
   }
+
   //неуниверсвльный, но очень простой способ поделить текст на строчки разделённые пробелами
   /*val tokens = source.mkString.split("//s+")
   println(tokens.mkString(" "))
@@ -35,14 +37,57 @@ object conspect extends App {
    * я взял из книжки. Однако вот. Кто знает в чём дело - расскажите =)
    * Если нужно обрабатывать смесь цифр и символов, всегда можно воспользоваться java.util.Scanner
    */
-  val age = readDouble()//или readDouble, readLong(),etc. - чтение из консоли
+  //val age = readInt()//или readDouble, readLong(),etc. - чтение из консоли
   source.close
+  /**
+   * при чтении из url необходимо знать кодировку. Определить её можно, например по http-заголовку, больше:
+   * www.w3.org/international/O-charset
+   */
   val source1 = Source.fromURL("https://www.google.com/")
   //вот так ХОБА! и почитали страничку!
   val text = source1.getLines
   println(text.mkString("\n"))
-  source1.close
-  val source2 = Source.fromString("Wello hold")
+  source1.close()
+  val source2 = Source.fromString("Wello hold") //своего рода отладочный вариант
   for(c<-source2) print(c)
-  source2.close
+  source2.close()
+  val source3 = Source.stdin                    //чтение из стандартного потока ввода
+  source3.close()
+//----------------------------------------------------------------вывод в файл------------------------------------------
+  /**
+   * Если коротко, то в scala его нет. Но есть в Java и этого хватит.
+   */
+  val out = new PrintWriter("output.txt")
+  for(i<-1 to 100) out.println(i)
+  /**
+   * всё кроме printf будет работать нормально, если нужен функционал printf - используем интерполятор f""
+   */
+  out.close()
+  //обход катологов и чтение файлов в двоичном режиме тут упоминается. Но я писать об этомм не буду
+
+//---------------------------------------------Сериализация-------------------------------------------------------------
+  //я не знаю, что это, напишу позже, если нунжно будет.
+  //Как я понял, это способ хранить объекты в файлах подкачки?
+  //TODO Serialization
+//--------------------------------------Ёлки, палки и cmd---------------------------------------------------------------
+  import scala.sys.process._
+
+  /**
+   * Не вдаваясь глубоко, скажу, что этот import даёт возможность всячески взаимодействовать
+   * с оболочкой командной строки. Например, так:
+   */
+  println("cmd POWER:")
+  "ls -al ..".!
+  /**
+   * ! - здесь выполняет строчку как команду. если вместо ! поставить !! - вернёт результат строкой
+   */
+  println(s"cmd POWER:${"ls -al ..".!!}")
+  /**
+   * Тут вообще очень много крутых вещей, но их очень муторно иллюстрировать, так что я просто перечислю, что есть
+   * pipe
+   * направление в файл
+   * ввод из файла
+   * ввод из url
+   * и ещё немного приятных мелочей
+   */
 }
