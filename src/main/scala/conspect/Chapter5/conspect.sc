@@ -1,4 +1,5 @@
 import java.beans.BeanProperty
+import scala.language.postfixOps
 
 //------------------------------------------------class-----------------------------------------------------------------
 class Counter{                      //создание класса
@@ -13,9 +14,9 @@ counter.current()                   //вызовы методов
 counter.increment()
 counter.current                     //если передавать переменные не надо, то () можно не писать
 //хорошим стилем считается использование () при вызове мутатора и без () при вызове аксессора
-counter current                     //... и без точки...
+counter current                     //... и без точки... если включить scala.language.postfixOps
 class person {
-  private var age = 0               //поля лучше делать private с getter и setter
+  private var age = 0               //поля лучше делать private
   def GetAge = age
   def SetAge(x:Int) = age = x //как-то так было бы в java
 }

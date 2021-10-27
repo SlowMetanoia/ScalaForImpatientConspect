@@ -98,7 +98,7 @@ inst1.eq(inst1)
 inst1.equals(inst2)
 //eq проверяет, что объекты лежат по одной ссылке то есть проверяется не равенство, а тождественность.
 //equals по умолчанию использует eq но часто нужна будет более гибкая его реализация и тогда:
-class Smthg(name:String, amount:Int){
+class Smthg(val name:String, val amount:Int){
   //equals должен принимать именно Any!
   final override def equals(obj: Any): Boolean = {
     //я использую pattern matching, потому что это читабельнее и короче. Иначе можно, но не нужно.

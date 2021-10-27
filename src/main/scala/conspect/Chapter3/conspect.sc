@@ -1,4 +1,5 @@
 import scala.collection.mutable.ArrayBuffer
+import scala.language.postfixOps
 
 //--------------------------------------------------------массивы-------------------------------------------------------
 //массивы из scala и java являются совместимыми (как, пока хз)
@@ -14,7 +15,6 @@ b += (1, 2, 3, 4, 5) //можно и так
 b ++= Array(8, 13, 21) //можно долить в буффер коллекцию
 b.trimEnd(5) //удалить 5 элементов с концадобавление и удаление элементов с конца производится за константное время
 b.insert(2, 7) //добавление элемента по индексу
-b.insert(2, 1, 2, 3, 4) //можно добавить несколько
 b.remove(2) //удаление элемента по индексу
 b.remove(2, 3) //нескольких
 b.toArray //преобразование в массив, можно и обратно(toBuffer)
@@ -91,12 +91,6 @@ def swapp2(arr:Array[Int]) ={
     }
   else arr(i)
 }
-//4
-def porder(arr:Array[Int]) =
-  {
-    var result = for (elem <- arr if elem>0) yield elem
-    result = result.toBuffer ++= for(elem<-arr if elem>=0) yield elem
-  }//не наиболее эффективно, но коротко и понятно
 //5
 def avg(arr:Array[Double]) =
   {
