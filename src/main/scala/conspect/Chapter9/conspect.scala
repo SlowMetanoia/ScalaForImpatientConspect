@@ -90,4 +90,17 @@ object conspect extends App {
    * ввод из url
    * и ещё немного приятных мелочей
    */
+//----------------------------------------------------regex-------------------------------------------------------------
+  //Есть scala.util.matching.Regex, но создать регуляроне выражение можно с с помощью преобразования строки:
+  val numPattern = "[0-9]+".r                                 //вот и regex
+  //Если нужно в рамках regex использовать /,\,", то есть интерполятор raw
+  val wsnumwsPattern = """\s+[0-9]+\s+""".r
+  println(wsnumwsPattern.findAllIn("1 and 2").mkString(","))  //findAllIn возвращает итератор по всем вхождениям
+  //findFirst возвращает Option[String],где лежит первое вхождение(нет)
+  println(wsnumwsPattern.findFirstIn("1 and 2"))
+  //чтобы выделить группу в regex, можно использовать ()
+  val numnletterPattern = "([0-9]+)([a-z]+)".r
+  println(numnletterPattern.findAllIn("1 and 2").mkString(","))
+  //TODO: дописать regex, сейчас слишком лень(((
 }
+
