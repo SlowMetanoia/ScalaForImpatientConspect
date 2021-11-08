@@ -103,4 +103,3 @@ object conspect extends App {
   println(numnletterPattern.findAllIn("1 and 2").mkString(","))
   //TODO: дописать regex, сейчас слишком лень(((
 }
-
