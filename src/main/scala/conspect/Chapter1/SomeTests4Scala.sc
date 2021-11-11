@@ -1,5 +1,5 @@
-import scala.collection.BitSet.empty.to
-import scala.collection.immutable.BitSet.empty.to
+
+
 
 var a = 3+7 //изменяемая переменная
 a=a<<2
@@ -8,7 +8,7 @@ val c = a&b //типы определяются автоматически.
 a.toString
 a + b//a.+(b)
 //a.=(b) - не работает тут, хотя должно бы.
-"bonjour" sorted
+"bonjour".sorted
 
 math.sqrt(2)
 
