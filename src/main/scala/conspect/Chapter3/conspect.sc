@@ -4,6 +4,8 @@ import scala.language.postfixOps
 //--------------------------------------------------------массивы-------------------------------------------------------
 //массивы из scala и java являются совместимыми (как, пока хз)
 val numbers = new Array[Int](3) //инициализируется "0"
+val numbers1 = Array(1,2,3,4)
+println(numbers)
 val strings = new Array[String](10) //инициализируются null
 val s = Array("Hello", "Hold") //при инициализиции значениями НЕ нужно писать new
 s(0) //() для доступа к элементам
@@ -15,17 +17,47 @@ b += (1, 2, 3, 4, 5) //можно и так
 b ++= Array(8, 13, 21) //можно долить в буффер коллекцию
 b.trimEnd(5) //удалить 5 элементов с концадобавление и удаление элементов с конца производится за константное время
 b.insert(2, 7) //добавление элемента по индексу
+b
 b.remove(2) //удаление элемента по индексу
-b.remove(2, 3) //нескольких
+b.remove(2, 2) //нескольких
 b.toArray //преобразование в массив, можно и обратно(toBuffer)
+
+val func4: Int=>Int = x => if(x==1) 1 else x * func4(x-1)
+val func5: (Double,Double) => Double = (x,y) => math.sqrt(x*x+y*y)
+val func6: Int=>Boolean = x => {
+  x%2 == 0
+}
+
+val func7:Int=>Int = x=>x+1
+
+val tuple2:(Int,String) = (123,"sdf")
+
+Seq(1,3,5,7,10,20).filter(func6)
+Seq(1,3,5,7,9,20).map(x=>x%3)
+Seq(1,3,5,7,9,20).reduce((x,y)=>x+y)
+Seq(1,3,5,7,9,20).find(_ == 7)
+Seq(1,3,5,7,9,20).contains(7)
+Seq(1,3,5,7,9,20).indexOf(7)
+Seq(1,3,5,7,9,20).product
+Seq(1,3,5,7,9,20).zip(Seq(6,5,4,3,2,1).map(_.toString))
+Seq(1,3,5,7,9,20).forall(func6)
+Seq(1,3,5,7,9,20).exists(func6)
+Seq(1,3,5,7,9,20).count(func6)
+
+def compose[A,B,C](f1:A=>B,f2:B=>C):A=>C =
+  x => f2(f1(x))
+
+val func8 = compose[Int,Int,Boolean](func4,func6)
+func8(1)
 
 //----------------------------------------------------обход массивов----------------------------------------------------
 val b = ArrayBuffer(1, 2, 3, 4, 5)
-for (i <- 0 until b.length) print(f"$i: ${b(i)} ")
+for (i <- 0 until b.length) print(s"($i): ${b(i)} ")
+
 // for i <- range - обеспечивет подстановку в i  всех элементов из range
 // 1 to 10 = (1 2 3 4 5 6 7 8 9 10) - все
 // 1 until 10 = (1 2 3 4 5 6 7 8 9) - все без последнего
-for (i <- 0 until b.length by -1) print(f"$i: ${b(i)} ")  //в обратном порядке
+for (i <- b.length - 1 until 0 by -1) print(f"$i: ${b(i)} ")  //в обратном порядке
 for (i <- b.indices) print(f"$i: ${b(i)} ")               //потому что индексы можно вытащить и они тоже образуют коллекцию
 for (i <- b.indices.reverse) print(f"$i: ${b(i)} ")       //в обратном порядке (Ругается, но работает)
 for (i <- b) print(f"$i")                                 //foreach, если индексы не нужны
